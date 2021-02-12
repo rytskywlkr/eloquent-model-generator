@@ -202,7 +202,8 @@ class RelationProcessor implements ProcessorInterface
         $name = Str::camel($reflectionObject->getShortName());
 
         $arguments = [
-            $model->getNamespace()->getNamespace() . '\\' . Str::singular(Str::studly($relation->getTableName()))
+            //$model->getNamespace()->getNamespace() . '\\' . Str::singular(Str::studly($relation->getTableName()))
+            'App\Models' . '\\' . Str::singular(Str::studly($relation->getTableName()))
         ];
 
         if ($relation instanceof BelongsToMany) {
