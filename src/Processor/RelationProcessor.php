@@ -162,17 +162,20 @@ class RelationProcessor implements ProcessorInterface
 
             $virtualPropertyType = $relationClass;
         } elseif ($relation instanceof HasMany) {
-            $name = Str::plural(Str::camel($relation->getTableName()));
+            //$name = Str::plural(Str::camel($relation->getTableName()));
+            $name = Str::plural(Str::camel($relation->getTableName() . "_" . preg_replace("/(_id\z)|(_code\z)/", "", $relation->getForeignColumnName())));
             $docBlock = sprintf('@return \%s', EloquentHasMany::class);
 
             $virtualPropertyType = sprintf('%s[]', $relationClass);
         } elseif ($relation instanceof BelongsTo) {
-            $name = Str::singular(Str::camel($relation->getTableName()));
+            //$name = Str::singular(Str::camel($relation->getTableName()));
+            $name = Str::singular(Str::camel(preg_replace("/(_id\z)|(_code\z)/", "", $relation->getForeignColumnName())));
             $docBlock = sprintf('@return \%s', EloquentBelongsTo::class);
 
             $virtualPropertyType = $relationClass;
         } elseif ($relation instanceof BelongsToMany) {
-            $name = Str::plural(Str::camel($relation->getTableName()));
+            //$name = Str::plural(Str::camel($relation->getTableName()));
+            $name = Str::plural(Str::camel(preg_replace("/(_id\z)|(_code\z)/", "", $relation->getForeignColumnName())));
             $docBlock = sprintf('@return \%s', EloquentBelongsToMany::class);
 
             $virtualPropertyType = sprintf('%s[]', $relationClass);
